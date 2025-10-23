@@ -2,6 +2,10 @@
 
 A web-based email filtering application that helps users manage and organize their emails effectively.
 
+## Live Demo
+
+Visit the application at: [https://penguin186.github.io/email-filter/](https://penguin186.github.io/email-filter/)
+
 ## Features
 
 - Email filtering capabilities
