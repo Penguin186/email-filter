@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        textarea {
+            width: 80%;
+            max-width: 600px;
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        h2 {
+            margin: 10px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Paste your text below:</h2>
+    <textarea id="inputText" placeholder="Paste text here..."></textarea>
+
+    <h2>Extracted Emails:</h2>
+    <textarea id="outputText" placeholder="Emails will appear here..." readonly></textarea>
+
+    <script>
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+
+        inputText.addEventListener('input', () => {
+            const text = inputText.value;
+
+            // Regular expression to match emails
+            const emailPattern = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+
+            // Find all emails in the text
+            const emails = text.match(emailPattern) || [];
+
+            // Put emails in the output box, one per line
+            outputText.value = emails.join('\n');
+        });
+    </script>
+</body>
+</html>
