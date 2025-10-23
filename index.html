@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Extractor</title>
+    <title>Email Filter</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,11 +17,11 @@
         }
         .container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             width: 80%;
             max-width: 600px;
-            gap: 10px;
-            align-items: start;
+            gap: 8px;
+            align-items: stretch;
         }
         textarea {
             flex: 1;
@@ -38,16 +38,16 @@
             border-color: #666666;
         }
         .button {
-            padding: 10px 20px;
+            padding: 8px 14px;
             color: #ffffff;
             background-color: #000000;
             border: 2px solid #000000;
             border-radius: 4px;
             cursor: pointer;
-            height: 40px;
+            height: 36px;
             min-width: 80px;
-            transition: all 0.3s ease;
-            align-self: stretch;
+            transition: all 0.25s ease;
+            align-self: flex-end;
         }
         .button:hover {
             background-color: #ffffff;
