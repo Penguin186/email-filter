@@ -17,14 +17,14 @@
         }
         .container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             width: 80%;
             max-width: 600px;
             gap: 10px;
-            align-items: flex-end;
+            align-items: start;
         }
         textarea {
-            width: 100%;
+            flex: 1;
             height: 150px;
             padding: 10px;
             font-size: 16px;
@@ -45,8 +45,9 @@
             border-radius: 4px;
             cursor: pointer;
             height: 40px;
-            width: 100px;
+            min-width: 80px;
             transition: all 0.3s ease;
+            align-self: stretch;
         }
         .button:hover {
             background-color: #ffffff;
