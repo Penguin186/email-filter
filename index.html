@@ -17,10 +17,11 @@
         }
         .container {
             display: flex;
+            flex-direction: column;
             width: 80%;
             max-width: 600px;
             gap: 10px;
-            align-items: start;
+            align-items: flex-end;
         }
         textarea {
             width: 100%;
@@ -44,6 +45,7 @@
             border-radius: 4px;
             cursor: pointer;
             height: 40px;
+            width: 100px;
             transition: all 0.3s ease;
         }
         .button:hover {
