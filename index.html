@@ -15,59 +15,104 @@
             margin: 0;
             background-color: #f4f4f4;
         }
-        textarea {
+        .container {
+            display: flex;
             width: 80%;
             max-width: 600px;
+            gap: 10px;
+            align-items: start;
+        }
+        textarea {
+            width: 100%;
             height: 150px;
-            margin: 10px 0;
             padding: 10px;
             font-size: 16px;
         }
+        .button {
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            height: 40px;
+            transition: background-color 0.3s;
+        }
+        .paste-button {
+            background-color: #4CAF50;
+        }
+        .copy-button {
+            background-color: #2196F3;
+        }
         h2 {
-            margin: 10px 0 0 0;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
     <h2>Paste your text below:</h2>
-    <div style="display: flex; width: 80%; max-width: 600px; gap: 10px; align-items: start;">
+    <div class="container">
         <textarea id="inputText" placeholder="Paste text here..."></textarea>
-        <button id="pasteButton" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; height: 40px;">
-            Paste
-        </button>
+        <button id="pasteButton" class="button paste-button">Paste</button>
     </div>
 
     <h2>Extracted Emails:</h2>
-    <textarea id="outputText" placeholder="Emails will appear here..." readonly></textarea>
+    <div class="container">
+        <textarea id="outputText" placeholder="Emails will appear here..." readonly></textarea>
+        <button id="copyButton" class="button copy-button">Copy</button>
+    </div>
 
     <script>
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
         const pasteButton = document.getElementById('pasteButton');
+        const copyButton = document.getElementById('copyButton');
+
+        // Email extraction function
+        function extractEmails() {
+            const text = inputText.value;
+            const emailPattern = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+            const emails = text.match(emailPattern) || [];
+            outputText.value = [...new Set(emails)].join('\n');
+        }
 
         // Paste button functionality
         pasteButton.addEventListener('click', async () => {
             try {
                 const text = await navigator.clipboard.readText();
                 inputText.value = text;
-                // Trigger the email extraction
                 extractEmails();
             } catch (err) {
                 alert('Failed to read clipboard. Please make sure you have granted clipboard permission.');
             }
         });
 
-        // Function to extract emails
-        function extractEmails() {
-            const text = inputText.value;
-            // Regular expression to match emails
-            const emailPattern = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
-            // Find all emails in the text
-            const emails = text.match(emailPattern) || [];
-            // Display unique emails only
-            outputText.value = [...new Set(emails)].join('\n');
-        }
+        // Copy button functionality
+        copyButton.addEventListener('click', async () => {
+            const textToCopy = outputText.value;
+            if (!textToCopy) {
+                alert('No emails to copy!');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                
+                // Visual feedback
+                const originalText = copyButton.textContent;
+                copyButton.textContent = 'Copied!';
+                copyButton.style.backgroundColor = '#4CAF50';
+                
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    copyButton.textContent = originalText;
+                    copyButton.style.backgroundColor = '#2196F3';
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy to clipboard. Please try again.');
+            }
+        });
 
+        // Input event listener for real-time email extraction
         inputText.addEventListener('input', extractEmails);
     </script>
 </body>
