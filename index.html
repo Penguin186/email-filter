@@ -13,7 +13,7 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            background-color: #ffffff;
         }
         .container {
             display: flex;
@@ -27,24 +27,36 @@
             height: 150px;
             padding: 10px;
             font-size: 16px;
+            border: 2px solid #000000;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #666666;
         }
         .button {
             padding: 10px 20px;
-            color: white;
-            border: none;
+            color: #ffffff;
+            background-color: #000000;
+            border: 2px solid #000000;
             border-radius: 4px;
             cursor: pointer;
             height: 40px;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
-        .paste-button {
-            background-color: #4CAF50;
+        .button:hover {
+            background-color: #ffffff;
+            color: #000000;
         }
-        .copy-button {
-            background-color: #2196F3;
+        .button.active {
+            background-color: #ffffff;
+            color: #000000;
         }
         h2 {
             margin: 10px 0;
+            color: #000000;
         }
     </style>
 </head>
@@ -100,12 +112,12 @@
                 // Visual feedback
                 const originalText = copyButton.textContent;
                 copyButton.textContent = 'Copied!';
-                copyButton.style.backgroundColor = '#4CAF50';
+                copyButton.classList.add('active');
                 
                 // Reset button after 2 seconds
                 setTimeout(() => {
                     copyButton.textContent = originalText;
-                    copyButton.style.backgroundColor = '#2196F3';
+                    copyButton.classList.remove('active');
                 }, 2000);
             } catch (err) {
                 alert('Failed to copy to clipboard. Please try again.');
