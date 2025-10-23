@@ -30,7 +30,12 @@
 </head>
 <body>
     <h2>Paste your text below:</h2>
-    <textarea id="inputText" placeholder="Paste text here..."></textarea>
+    <div style="display: flex; width: 80%; max-width: 600px; gap: 10px; align-items: start;">
+        <textarea id="inputText" placeholder="Paste text here..."></textarea>
+        <button id="pasteButton" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; height: 40px;">
+            Paste
+        </button>
+    </div>
 
     <h2>Extracted Emails:</h2>
     <textarea id="outputText" placeholder="Emails will appear here..." readonly></textarea>
@@ -38,19 +43,32 @@
     <script>
         const inputText = document.getElementById('inputText');
         const outputText = document.getElementById('outputText');
+        const pasteButton = document.getElementById('pasteButton');
 
-        inputText.addEventListener('input', () => {
+        // Paste button functionality
+        pasteButton.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                inputText.value = text;
+                // Trigger the email extraction
+                extractEmails();
+            } catch (err) {
+                alert('Failed to read clipboard. Please make sure you have granted clipboard permission.');
+            }
+        });
+
+        // Function to extract emails
+        function extractEmails() {
             const text = inputText.value;
-
             // Regular expression to match emails
             const emailPattern = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
-
             // Find all emails in the text
             const emails = text.match(emailPattern) || [];
+            // Display unique emails only
+            outputText.value = [...new Set(emails)].join('\n');
+        }
 
-            // Put emails in the output box, one per line
-            outputText.value = emails.join('\n');
-        });
+        inputText.addEventListener('input', extractEmails);
     </script>
 </body>
 </html>
